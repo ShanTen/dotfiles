@@ -10,11 +10,16 @@ from gi.repository import Playerctl, GLib
 
 logger = logging.getLogger(__name__)
 
+def return_truncated_string(string, max_size=30):
+    if len(string) > max_size:
+        return string[:27] + "..."
+    else:
+        return string
 
 def write_output(text, player):
     logger.info('Writing output')
 
-    output = {'text': text,
+    output = {'text': return_truncated_string(text),
               'class': 'custom-' + player.props.player_name,
               'alt': player.props.player_name}
 
@@ -38,6 +43,7 @@ def on_metadata(player, metadata, manager):
     elif player.get_artist() != '' and player.get_title() != '':
         track_info = '{artist} - {title}'.format(artist=player.get_artist(),
                                                  title=player.get_title())
+        track_info = return_truncated_string(track_info)
     else:
         track_info = player.get_title()
 
@@ -45,9 +51,7 @@ def on_metadata(player, metadata, manager):
         track_info = ' ' + track_info
 
     if player.props.status == "Playing":
-        if len(track_info) > 30:
-            track_info = track_info[:30] + "..."
-    write_output(track_info, player)
+        write_output(track_info, player)
 
 
 def on_player_appeared(manager, player, selected_player=None):
