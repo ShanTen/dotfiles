@@ -46,6 +46,13 @@
   padding: 0.4rem;
 }
 
+#network {
+  margin: 0;
+  padding-left: 5px;
+  padding-right: 10px;
+  background-color: @base;  
+}
+
 #workspaces button.empty {
   color: @overlay0;
   border-style: none;
