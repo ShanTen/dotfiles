@@ -16,9 +16,10 @@
     ],
     "modules-right": [
         // "custom/storage",
-        // "memory",
-        // "cpu",
+        
         "temperature",
+        "cpu",
+        "memory",
         "battery",
         "wireplumber",
         "network",
@@ -170,7 +171,8 @@
         "exec": "~/.config/waybar/mediaplayer.py --player spotify",
         "format": " {}",
         "return-type": "json",
-        "on-click": "playerctl play-pause",
+        "on-click": "playerctl -p spotify play-pause",
+        "on-click-right": "hyprctl dispatch workspace 5",
         "on-scroll-up": "playerctl next",
         "on-scroll-down": "playerctl previous"
     },

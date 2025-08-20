@@ -7,12 +7,13 @@ import gi
 import json
 gi.require_version('Playerctl', '2.0')
 from gi.repository import Playerctl, GLib
-
 logger = logging.getLogger(__name__)
 
-def return_truncated_string(string, max_size=30):
+MAX_TEXT_LEN = 35
+
+def return_truncated_string(string, max_size=MAX_TEXT_LEN):
     if len(string) > max_size:
-        return string[:27] + "..."
+        return string[:max_size-3] + "..."
     else:
         return string
 
@@ -45,7 +46,7 @@ def on_metadata(player, metadata, manager):
                                                  title=player.get_title())
         track_info = return_truncated_string(track_info)
     else:
-        track_info = player.get_title()
+        track_info = return_truncated_string(player.get_title())
 
     if player.props.status != 'Playing' and track_info:
         track_info = ' ' + track_info
